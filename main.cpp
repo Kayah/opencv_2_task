@@ -10,7 +10,7 @@ const int MAX_USED_THREADS = 6;
 
 void parallel_resize(std::vector<Mat> &blocks, int st, int end, double coefx, double coefy)
 {
-    std::cout<< "Start "<<st << "  END " << end << std::endl;
+//    std::cout<< "Start "<<st << "  END " << end << std::endl;
     for (; st < end; st++)
     {
         blocks.at(st);
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     uint32_t thr_to_proc = atoi(argv[2]);
     uint32_t used_thr = 0;
     uint32_t hw_thr = std::thread::hardware_concurrency();
-    std::cout << "Available hardware threads " << hw_thr << std::endl;
+  //  std::cout << "Available hardware threads " << hw_thr << std::endl;
     
     if (thr_to_proc > hw_thr)
     {
@@ -42,17 +42,17 @@ int main(int argc, char **argv)
         used_thr = thr_to_proc;
     }
     
-    std::cout << used_thr <<" hardware threads will be used"  << std::endl;
+  //  std::cout << used_thr <<" hardware threads will be used"  << std::endl;
     
-    std::cout <<"Reading image ..."  << std::endl;
+  //  std::cout <<"Reading image ..."  << std::endl;
     
     Mat image = imread(im_name, IMREAD_COLOR);
 
-    std::cout << "Width = " << image.cols << " and Height " << image.rows << " of inputed image"<<std::endl;
+  //  std::cout << "Width = " << image.cols << " and Height " << image.rows << " of inputed image"<<std::endl;
     uint32_t res_block_width  = image.cols / used_thr; 
     uint32_t res_block_height = image.rows / used_thr;
 
-    std::cout << "Width of small block = " << res_block_width << " and Height of small block " << res_block_height <<std::endl;
+ //   std::cout << "Width of small block = " << res_block_width << " and Height of small block " << res_block_height <<std::endl;
     Size small_size(res_block_width, res_block_height);
     std::vector<Mat> blocks;   
 
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
             blocks.push_back(Mat(image, rect));    
         }
     }
-    std::cout<<"count of blocks " << blocks.size() <<" height  " << blocks.at(0).rows <<std::endl;
+//    std::cout<<"count of blocks " << blocks.size() <<" height  " << blocks.at(0).rows <<std::endl;
     std::vector<std::thread> threads(used_thr);
     int st = 0;
     int end = used_thr;
@@ -85,9 +85,9 @@ int main(int argc, char **argv)
     Mat combined(image.cols, image.rows, blocks[0].type());
     Size sb_size(blocks.at(0).cols, blocks.at(0).rows); 
 
-    std::cout<< "Blocks size " << blocks.size()<<std::endl;
-    std::cout << "Width of small block = " << blocks.at(0).cols << " and Height of small block " << blocks.at(0).rows <<std::endl;
-    std::cout<< " New width " << valw << " New Height " << valh <<std::endl;
+//    std::cout<< "Blocks size " << blocks.size()<<std::endl;
+//    std::cout << "Width of small block = " << blocks.at(0).cols << " and Height of small block " << blocks.at(0).rows <<std::endl;
+//    std::cout<< " New width " << valw << " New Height " << valh <<std::endl;
     
     size_t i = 0;    
     for (int y = 0; y < valh; y += sb_size.height)
