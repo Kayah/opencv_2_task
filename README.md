@@ -1,4 +1,4 @@
-run ./main <image path> <num of threads>
+run ./main `image path` `num of threads`
 
 example ./main test2.jpg 4
 
